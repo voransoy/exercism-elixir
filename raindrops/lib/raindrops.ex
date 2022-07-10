@@ -1,4 +1,10 @@
 defmodule Raindrops do
+
+  @factormap %{
+    3 => "Pling",
+    5 => "Plang",
+    7 => "Plong"
+  }
   @doc """
   Returns a string based on raindrop factors.
 
@@ -10,5 +16,10 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t()
   def convert(number) do
+    result =
+      Enum.reduce(@factormap, "", fn({factor, string}, acc) ->
+        if rem(number, factor) == 0, do: acc <> string, else: acc
+      end)
+    if result == "", do: "#{number}", else: result
   end
 end
